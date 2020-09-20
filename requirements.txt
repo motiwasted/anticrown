@@ -14,7 +14,6 @@ python-telegram-bot==12.8
 requests==2.20.0
 six==1.15.0
 snowballstemmer==2.0.0
-telebot==0.0.3
 telebot-calendar==1.1
 tornado==6.0.4
 wincertstore==0.2
