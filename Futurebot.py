@@ -5,9 +5,12 @@ import telebot_calendar
 from telebot_calendar import CallbackData
 from telebot.types import ReplyKeyboardRemove, CallbackQuery
 import psycopg2
+import dj_database_url
 
-con = psycopg2.connect(dbname='future_bot', user='postgres', 
-                        password='1234', host='localhost')
+DATABASE_URL = os.environ['DATABASE_URL']
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
+con = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = con.cursor()
 
 bot = telebot.TeleBot('1303412518:AAHBYrrX0Ne4NwSqbNOvQlZMcS5BkBNtPDE')
@@ -56,7 +59,7 @@ def send_text(message):
     elif message.text.lower() == 'мои задачи':
         with con:
             mci = message.chat.id
-            cursor.execute("SELECT * FROM task_table WHERE user_id=%s",[mci])
+            cursor.execute("SELECT * FROM tasks WHERE user_id=%s",[mci])
 
             rows = cursor.fetchall()
 
@@ -67,7 +70,7 @@ def send_text(message):
         bot.send_message(message.chat.id, 'Отлично! вот и новая цель!', reply_markup=start_keyboard)
         cur = con.cursor()
         cur.execute (
-        '''INSERT INTO task_table (user_id,goal,dline)
+        '''INSERT INTO tasks (user_id,goal,dline)
         VALUES (%s, %s, %s);
         ''',
         (sql_id,sql_task,sql_date))
@@ -124,5 +127,3 @@ def callback_inline(call: CallbackQuery):
 
 print("Bot was started \n " , time.strftime("%H:%M:%S", time.localtime()))
 bot.polling()
-
-
