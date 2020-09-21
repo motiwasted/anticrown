@@ -6,10 +6,10 @@ import telebot_calendar
 from telebot_calendar import CallbackData
 from telebot.types import ReplyKeyboardRemove, CallbackQuery
 import psycopg2
-import dj_database_url
+
 
 DATABASE_URL = os.environ['DATABASE_URL']
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 
 con = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = con.cursor()
