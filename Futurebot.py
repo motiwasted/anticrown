@@ -60,7 +60,7 @@ def send_text(message):
     elif message.text.lower() == 'мои задачи':
         with con:
             mci = message.chat.id
-            cursor.execute("SELECT * FROM tasks WHERE user_id=%s",[mci])
+            cursor.execute("SELECT * FROM user_tasks WHERE user_id=%s",[mci])
 
             rows = cursor.fetchall()
 
@@ -71,10 +71,10 @@ def send_text(message):
         bot.send_message(message.chat.id, 'Отлично! вот и новая цель!', reply_markup=start_keyboard)
         cur = con.cursor()
         cur.execute (
-        '''INSERT INTO tasks (user_id,goal,dline)
+        '''INSERT INTO user_tasks (user_id,goal,dline)
         VALUES (%s, %s, %s);
         ''',
-        (sql_id,sql_task,sql_date))
+        (sql_id,sql_task,sql_date)) 
         con.commit() 
     elif message.text.lower() =='выбрать дату':
         now = datetime.datetime.now()
