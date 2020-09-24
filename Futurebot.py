@@ -65,7 +65,7 @@ def send_text(message):
             rows = cursor.fetchall()
 
             for row in rows:
-                bot.send_message(message.chat.id,(f"{row[1]} {row[2]} {row[3]}"), reply_markup=start_keyboard)
+                bot.send_message(message.chat.id,(f" {row[2]} {row[3]}"), reply_markup=start_keyboard)
                 
     elif message.text.lower() == 'да!':
         bot.send_message(message.chat.id, 'Отлично! вот и новая цель!', reply_markup=start_keyboard)
