@@ -96,7 +96,7 @@ def send_text(message):
         ''',
         (sql_task,sql_date,sql_id))
         con.commit() 
-    elif message.text.lower() == 'Я заболел':
+    elif message.text.lower() == 'я заболел':
         bot.send_message(435409717, 'Заболел человек, находящийся с вами в одном здании, пожалуйста сдайте тест', reply_markup=crown_button)
         
     else:
